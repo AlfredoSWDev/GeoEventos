@@ -1,0 +1,9 @@
+[submodule "GeoEventosAPI"]
+	path = GeoEventosAPI
+	url = git@github.com:AlfredoSWDev/GeoEventosAPI.git
+[submodule "GeoEventosGUI"]
+	path = GeoEventosGUI
+	url = git@github.com:AlfredoSWDev/GeoEventosGUI.git
+[submodule "GeoEventosAndroid"]
+	path = GeoEventosAndroid
+	url = git@github.com:AlfredoSWDev/GeoEventosAndroid.git
