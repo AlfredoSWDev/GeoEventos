@@ -65,6 +65,27 @@ GeoEventos conecta empresas con usuarios a través de un mapa interactivo. Las e
 - ✅ Click en marcador para ver detalle del evento
 - ✅ Click en mapa para asignar ubicación al crear un evento
 - ✅ App Android con mapa OSM y panel de detalle
+- ✅ Suite de tests en GeoEventosAndroid (JVM + Compose UI)
+
+---
+
+## Testing — GeoEventosAndroid
+
+El submódulo Android cuenta con una suite de tests automatizados:
+
+| Capa | Archivo | Tests | Requiere |
+|------|---------|-------|----------|
+| ViewModel | `EventosViewModelTest` | 18 | Solo JVM |
+| DTO | `EventoResponseTest` | 16 | Solo JVM |
+| Validación de foto | `FotoUrlValidationTest` | 13 | Solo JVM |
+| Service + MockWebServer | `EventoApiServiceTest` | 25 | Solo JVM |
+| Compose UI | `PantallaMapaEventosUITest` | 12 | Emulador |
+
+```bash
+# Desde el directorio GeoEventosAndroid
+./gradlew testDebugUnitTest       # Tests JVM
+./gradlew connectedAndroidTest    # Tests de UI (requiere emulador)
+```
 
 ---
 
