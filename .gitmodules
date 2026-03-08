@@ -1,9 +1,14 @@
 [submodule "GeoEventosAPI"]
-	path = GeoEventosAPI
-	url = git@github.com:AlfredoSWDev/GeoEventosAPI.git
+    path = GeoEventosAPI
+    url = git@github.com:AlfredoSWDev/GeoEventosAPI.git
+    branch = main
+
 [submodule "GeoEventosGUI"]
-	path = GeoEventosGUI
-	url = git@github.com:AlfredoSWDev/GeoEventosGUI.git
+    path = GeoEventosGUI
+    url = git@github.com:AlfredoSWDev/GeoEventosGUI.git
+    branch = main
+
 [submodule "GeoEventosAndroid"]
-	path = GeoEventosAndroid
-	url = git@github.com:AlfredoSWDev/GeoEventosAndroid.git
+    path = GeoEventosAndroid
+    url = git@github.com:AlfredoSWDev/GeoEventosAndroid.git
+    branch = main
