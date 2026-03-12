@@ -3,9 +3,9 @@
     url = git@github.com:AlfredoSWDev/GeoEventosAPI.git
     branch = main
 
-[submodule "GeoEventosGUI"]
-    path = GeoEventosGUI
-    url = git@github.com:AlfredoSWDev/GeoEventosGUI.git
+[submodule "GeoEventosDesktop"]
+    path = GeoEventosDesktop
+    url = git@github.com:AlfredoSWDev/GeoEventosDesktop.git
     branch = main
 
 [submodule "GeoEventosAndroid"]
