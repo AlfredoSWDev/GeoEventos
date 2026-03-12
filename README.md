@@ -1,191 +1,95 @@
 # GeoEventos
 
-Plataforma de eventos geolocalizados que permite a empresas locales **publicar, promocionar y gestionar sus eventos** en un mapa interactivo, de forma similar a Google Maps.
-
----
-
-## ¿Qué es GeoEventos?
-
-GeoEventos conecta empresas con usuarios a través de un mapa interactivo. Las empresas publican sus eventos con ubicación, precio, descripción e imágenes. Los usuarios los descubren de forma gratuita desde cualquier dispositivo.
-
-### Modelo de Negocio — B2B
-
-| Actor | Rol | Acceso |
-|-------|-----|--------|
-| **Empresas / Clientes** | Pagan por publicar y promocionar eventos | Panel de gestión (GUI) |
-| **Usuarios finales** | Descubren y exploran eventos en el mapa | App Android (gratuito) |
-
----
-
-## Repositorios
-
-| Repositorio | Tecnología | Descripción |
-|-------------|------------|-------------|
-| [GeoEventosAPI](https://github.com/AlfredoSWDev/GeoEventosAPI) | Spring Boot + PostgreSQL | API REST — lógica de negocio y acceso a datos |
-| [GeoEventosGUI](https://github.com/AlfredoSWDev/GeoEventosGUI) | Java Swing + JavaFX | Cliente de escritorio para gestión de eventos (B2B) |
-| [GeoEventosAndroid](https://github.com/AlfredoSWDev/GeoEventosAndroid) | Kotlin + Jetpack Compose | App móvil para usuarios finales |
-
----
+Plataforma de eventos que integra una API, un cliente de escritorio, una aplicación móvil y un cliente web para la gestión y visualización de eventos.
 
 ## Arquitectura General
 
-```
-┌─────────────────────────────────────────────┐
-│              Clientes                        │
-│                                             │
-│  GeoEventosGUI        GeoEventosAndroid     │
-│  (Swing + Leaflet)    (Compose + OSMDroid)  │
-│       │                      │              │
-└───────┼──────────────────────┼──────────────┘
-        │    HTTP REST (JSON)  │
-        ▼                      ▼
-┌─────────────────────────────────────────────┐
-│              GeoEventosAPI                  │
-│         (Spring Boot - puerto 8080)         │
-│                                             │
-│  Controller → Service → Repository         │
-└──────────────────┬──────────────────────────┘
-                   │
-        ┌──────────┴──────────┐
-        ▼                     ▼
-   PostgreSQL              ImgBB API
-   (eventos,               (almacenamiento
-   coordenadas)             de imágenes)
-```
+La plataforma GeoEventos se compone de cuatro módulos principales:
 
----
+* **GeoEventosAPI**: El backend de la plataforma, desarrollado en Java 23 con Spring Boot 3.x, que proporciona una API RESTful para la gestión de eventos.
+* **GeoEventosGUI**: El cliente de escritorio, desarrollado en Java 23 con Swing y JavaFX, que permite a los usuarios administrar y visualizar eventos.
+* **GeoEventosWeb**: El cliente web, desarrollado en Kotlin 2.3 con Compose Multiplatform, que ofrece una interfaz de usuario web para la visualización de eventos.
+* **GeoEventosAndroid**: La aplicación móvil, desarrollada en Kotlin 1.9 con Jetpack Compose, que permite a los usuarios acceder y visualizar eventos en su dispositivo móvil.
 
-## Funcionalidades Actuales (MVP)
+## Requisitos
 
-- ✅ CRUD completo de eventos (crear, leer, actualizar, borrar)
-- ✅ Búsqueda de eventos por nombre y lugar
-- ✅ Subida de imágenes a ImgBB desde el backend
-- ✅ Coordenadas geográficas (latitud / longitud) por evento
-- ✅ Mapa interactivo con marcadores en el cliente de escritorio
-- ✅ Click en marcador para ver detalle del evento
-- ✅ Click en mapa para asignar ubicación al crear un evento
-- ✅ App Android con mapa OSM y panel de detalle
-- ✅ Suite de tests en GeoEventosGUI (JUnit 5 + Mockito + WireMock)
-- ✅ Suite de tests en GeoEventosAndroid (JVM + Compose UI)
+* Java / JDK: 23+
+* PostgreSQL: 14+
+* Android Studio: Hedgehog+
+* Android SDK: 28+
+* Navegador moderno: Chrome 74+, Firefox 79+
 
----
+## Cómo Clonar el Monorepo
 
-## Testing
-
-### GeoEventosGUI
-
-Tests automatizados que no requieren GeoEventosAPI corriendo — usan WireMock para simular el servidor.
-
-| Capa | Archivo | Tests | Requiere |
-|------|---------|-------|----------|
-| Modelo / DTO | `ImagenesTest` | 8 | Solo JVM |
-| Datos | `ConectorTest` | 7 | Solo JVM |
-| Datos | `LeerEventoTest` | 3 | Solo JVM |
-| HTTP (integración) | `ApiClientIntegrationTest` | 9 | Solo JVM |
+Para clonar el monorepo completo, ejecuta el siguiente comando:
 
 ```bash
-# Desde el directorio GeoEventosGUI
-mvn test
-```
-
-En entornos sin pantalla (servidores, CI/CD):
-
-```bash
-# Fedora / RHEL
-sudo dnf install xorg-x11-server-Xvfb
-
-# Ubuntu / Debian
-sudo apt install xvfb
-```
-
-```bash
-Xvfb :99 &
-export DISPLAY=:99
-mvn test
-```
-
-Resultado esperado: **27 tests, 0 failures**.
-
----
-
-### GeoEventosAndroid
-
-| Capa | Archivo | Tests | Requiere |
-|------|---------|-------|----------|
-| ViewModel | `EventosViewModelTest` | 18 | Solo JVM |
-| DTO | `EventoResponseTest` | 16 | Solo JVM |
-| Validación de foto | `FotoUrlValidationTest` | 13 | Solo JVM |
-| Service + MockWebServer | `EventoApiServiceTest` | 25 | Solo JVM |
-| Compose UI | `PantallaMapaEventosUITest` | 12 | Emulador |
-
-```bash
-# Desde el directorio GeoEventosAndroid
-./gradlew testDebugUnitTest       # Tests JVM
-./gradlew connectedAndroidTest    # Tests de UI (requiere emulador)
-```
-
----
-
-## Roadmap
-
-- [ ] Autenticación y autorización (JWT)
-- [ ] Filtros por categoría, fecha y proximidad geográfica
-- [ ] Endpoint de eventos por radio de distancia
-- [ ] Panel de estadísticas para clientes B2B
-- [ ] Notificaciones push en Android
-- [ ] Documentación automática con Swagger / OpenAPI
-- [ ] Despliegue en AWS (EC2 + RDS)
-- [ ] Publicación en Google Play Store
-
----
-
-## Cómo Clonar el Proyecto Completo
-
-```bash
-# Clonar el repo principal con todos los submódulos
 git clone --recurse-submodules git@github.com:AlfredoSWDev/GeoEventos.git
 ```
 
-Si ya clonaste sin submódulos:
-```bash
-git submodule update --init --recursive
-```
+## Cómo Correr Cada Módulo
 
----
+### GeoEventosAPI
 
-## Cómo Levantar el Proyecto
+Para levantar la API, ejecuta el siguiente comando:
 
-**1. Levantar la API (requerido por todos los clientes):**
 ```bash
 cd GeoEventosAPI
 ./gradlew bootRun
 ```
 
-**2. Levantar el cliente de escritorio:**
+La API estará disponible en `http://localhost:8080`.
+
+### GeoEventosGUI
+
+Para ejecutar el cliente de escritorio, abre el proyecto en IntelliJ IDEA y ejecuta la clase `Main.java`. Alternativamente, puedes ejecutar el siguiente comando:
+
 ```bash
 cd GeoEventosGUI
-# Ejecutar Main.java desde IntelliJ IDEA
+mvn javafx:run
 ```
 
-**3. Levantar la app Android:**
+### GeoEventosWeb
+
+Para ejecutar el cliente web, ejecuta el siguiente comando:
+
+```bash
+cd GeoEventosWeb
+./gradlew :composeApp:wasmJsBrowserDevelopmentRun
+```
+
+El cliente web se abrirá automáticamente en `http://localhost:8080`.
+
+### GeoEventosAndroid
+
+Para ejecutar la aplicación móvil, abre el proyecto en Android Studio y ejecuta la aplicación en un emulador o dispositivo físico. Alternativamente, puedes ejecutar el siguiente comando:
+
 ```bash
 cd GeoEventosAndroid
-# Abrir en Android Studio y correr en emulador o dispositivo
+./gradlew installDebug
 ```
 
----
+## Flujo de Desarrollo
 
-## Requisitos
+1. Desarrollo local → 
+2. Commits a rama feature → 
+3. Pull Request → 
+4. Merge a main → 
+5. CI/CD (Tests) → 
+6. Deploy a producción
 
-| Herramienta | Versión mínima |
-|-------------|---------------|
-| Java | 23+ |
-| PostgreSQL | 14+ |
-| Android Studio | Hedgehog+ |
-| Android SDK | 28+ |
+Cada proyecto utiliza su propio sistema de build:
+* **GeoEventosAPI**: Gradle
+* **GeoEventosGUI**: Maven
+* **GeoEventosWeb**: Gradle
+* **GeoEventosAndroid**: Gradle
 
----
+## Contribuyendo
 
-## Desarrollado por
+1. Crea una rama feature desde `main`
+2. Implementa los cambios
+3. Ejecuta los tests del proyecto correspondiente
+4. Abre un Pull Request con descripción clara
+5. Después del merge, los cambios se despliegan automáticamente
 
-**Alfredo** — [github.com/AlfredoSWDev](https://github.com/AlfredoSWDev)
+
