@@ -12,3 +12,8 @@
     path = GeoEventosAndroid
     url = git@github.com:AlfredoSWDev/GeoEventosAndroid.git
     branch = main
+    
+[submodule "GeoEventosWeb"]
+    path = GeoEventosWeb
+    url = git@github.com:AlfredoSWDev/GeoEventosWeb.git
+    branch = main
