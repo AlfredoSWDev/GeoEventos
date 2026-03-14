@@ -1,7 +1,10 @@
 /sources
 /ReadmeBuilder
+/product
 
 GeoEventosWeb_context.txt
 GeoEventosGUI_context.txt
 GeoEventosAndroid_context.txt
 GeoEventosAPI_context.txt
+GeoEventosDesktop_context.txt
+GeoEventosDB_context.txt
